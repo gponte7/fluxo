@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+:root{--bg:244 246 243;--surface:255 255 255;--ink:22 34 29;--muted:94 107 100;--line:221 227 222;--brand:39 64 127;--inc:23 138 91;--exp:200 57 82}
+.dark{--bg:15 21 19;--surface:22 30 27;--ink:232 239 234;--muted:148 163 155;--line:38 51 46;--brand:132 162 245;--inc:62 201 141;--exp:244 114 134}
+body{@apply bg-bg text-ink font-body antialiased}
+@layer components{
+  .card{@apply rounded-2xl border border-line bg-surface p-4 sm:p-5}
+  .input{@apply w-full rounded-xl border border-line bg-surface px-3 py-2.5 text-sm outline-none focus:border-brand focus:ring-2 focus:ring-brand/25}
+  .label{@apply mb-1 block text-sm font-medium}
+  .err{@apply mt-1 text-xs text-exp}
+  .btn{@apply inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition disabled:opacity-60 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand}
+  .btn-primary{@apply btn bg-brand text-surface hover:opacity-90}
+  .btn-ghost{@apply btn border border-line hover:bg-line/50}
+  .num{@apply font-display tabular-nums}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+@media print{:root,.dark{--bg:255 255 255;--surface:255 255 255;--ink:0 0 0;--muted:70 70 70;--line:210 210 210;--brand:39 64 127;--inc:23 138 91;--exp:200 57 82}.card{break-inside:avoid}}
