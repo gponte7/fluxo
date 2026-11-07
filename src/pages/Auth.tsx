@@ -58,7 +58,9 @@ export function AuthPage({ mode }: { mode: Mode }) {
       <form onSubmit={onSubmit} className="space-y-4" noValidate>
         {mode === 'signup' && field('name', 'Nome', 'text', 'name')}
         {field('email', 'E-mail', 'email', 'email')}
+        {mode === 'signup' && field('confirmEmail', 'Confirme o e-mail', 'email', 'off')}
         {mode !== 'recover' && field('password', 'Senha', 'password', mode === 'login' ? 'current-password' : 'new-password')}
+        {mode === 'signup' && field('confirmPassword', 'Confirme a senha', 'password', 'new-password')}
         {msg && <p className={`text-sm ${msg.ok ? 'text-inc' : 'text-exp'}`} role="alert">{msg.text}</p>}
         <button className="btn-primary w-full" disabled={busy}>{busy ? 'Aguarde…' : c.btn}</button>
       </form>
@@ -73,7 +75,7 @@ export function ResetPassword() {
   const nav = useNavigate()
   const { user, loading } = useAuth()
   const [msg, setMsg] = useState('')
-  const { register, handleSubmit, formState: { errors } } = useForm<{ password: string }>({ resolver: zodResolver(newPasswordSchema) })
+  const { register, handleSubmit, formState: { errors } } = useForm<{ password: string; confirmPassword: string }>({ resolver: zodResolver(newPasswordSchema) })
   const onSubmit = handleSubmit(async ({ password }) => {
     const { error } = await supabase.auth.updateUser({ password })
     if (error) setMsg(friendly(error)); else nav('/')
@@ -83,6 +85,7 @@ export function ResetPassword() {
       {!loading && !user ? <p className="text-sm text-exp">Link inválido ou expirado. <Link className="text-brand" to="/recuperar">Solicitar outro</Link></p> : (
         <form onSubmit={onSubmit} className="space-y-4" noValidate>
           <div><label className="label" htmlFor="p">Nova senha</label><input id="p" type="password" autoComplete="new-password" className="input" {...register('password')} />{errors.password && <p className="err">{errors.password.message}</p>}</div>
+          <div><label className="label" htmlFor="p2">Confirme a nova senha</label><input id="p2" type="password" autoComplete="new-password" className="input" {...register('confirmPassword')} />{errors.confirmPassword && <p className="err">{errors.confirmPassword.message}</p>}</div>
           {msg && <p className="text-sm text-exp" role="alert">{msg}</p>}
           <button className="btn-primary w-full">Salvar nova senha</button>
         </form>)}

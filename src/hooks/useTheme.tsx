@@ -1,12 +1,20 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from 'react'
-const Ctx = createContext({ dark: false, toggle: () => {} })
+export type ThemePref = 'sistema' | 'claro' | 'escuro'
+const KEY = 'preferencia-tema'
+const query = '(prefers-color-scheme: dark)'
+const Ctx = createContext<{ dark: boolean; pref: ThemePref; setPref: (p: ThemePref) => void }>({ dark: false, pref: 'sistema', setPref: () => {} })
+
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [dark, setDark] = useState(() => localStorage.getItem('tema') === 'escuro')
-  useEffect(() => {
-    document.documentElement.classList.toggle('dark', dark)
-    localStorage.setItem('tema', dark ? 'escuro' : 'claro') // apenas preferência visual
-  }, [dark])
-  return <Ctx.Provider value={{ dark, toggle: () => setDark((d) => !d) }}>{children}</Ctx.Provider>
+  const [pref, setPref] = useState<ThemePref>(() => { try { const v = localStorage.getItem(KEY); return v === 'claro' || v === 'escuro' ? v : 'sistema' } catch { return 'sistema' } })
+  const [sys, setSys] = useState(() => window.matchMedia(query).matches)
+  useEffect(() => { // acompanha o tema do aparelho em tempo real
+    const mq = window.matchMedia(query); const on = () => setSys(mq.matches)
+    mq.addEventListener('change', on); return () => mq.removeEventListener('change', on)
+  }, [])
+  const dark = pref === 'escuro' || (pref === 'sistema' && sys)
+  useEffect(() => { document.documentElement.classList.toggle('dark', dark); document.documentElement.style.colorScheme = dark ? 'dark' : 'light' }, [dark])
+  useEffect(() => { try { localStorage.setItem(KEY, pref) } catch { /* ignora */ } }, [pref])
+  return <Ctx.Provider value={{ dark, pref, setPref }}>{children}</Ctx.Provider>
 }
 export const useTheme = () => useContext(Ctx)
 export const useColors = () => {

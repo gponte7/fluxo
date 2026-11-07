@@ -62,6 +62,8 @@ export default function Dashboard() {
           <section className="card"><h2 className="mb-3 font-display text-lg font-bold">Evolução em {year}</h2><EvolutionChart data={series} /></section>
         </div>
       )}
+      {/* Botão flutuante só aqui, para não cobrir informações das outras telas */}
+      <button onClick={() => newTx()} aria-label="Nova movimentação" className="fixed bottom-[calc(4.5rem+env(safe-area-inset-bottom))] right-4 z-30 flex h-14 w-14 items-center justify-center rounded-full bg-brand text-surface shadow-lg md:hidden print:hidden"><Plus /></button>
     </>
   )
 }
