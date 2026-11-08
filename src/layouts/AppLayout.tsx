@@ -39,7 +39,7 @@ export default function AppLayout() {
     <DataProvider><UIProvider>
       <div className="min-h-screen md:pl-64 print:pl-0">
         <aside className="fixed inset-y-0 left-0 hidden w-64 flex-col border-r border-line bg-surface p-5 md:flex print:!hidden">
-          <div className="mb-8 flex items-center gap-2 font-display text-xl font-bold"><Wallet className="text-brand" />Meu Dinheiro</div>
+          <div className="mb-8 flex items-center gap-2 font-display text-xl font-bold"><Wallet className="text-brand" />Fluxo</div>
           <nav className="flex-1 space-y-1">
             {desktop.map(({ to, label, icon: I }) => (
               <NavLink key={to} to={to} end={to === '/'} className={({ isActive }) => `flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium ${isActive ? 'bg-brand/10 text-brand' : 'text-muted hover:bg-line/50'}`}><I size={18} />{label}</NavLink>

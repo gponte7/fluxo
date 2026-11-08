@@ -1,4 +1,4 @@
-# Meu Dinheiro — organização financeira pessoal
+# Fluxo — organização financeira pessoal
 
 React + TypeScript + Vite + Tailwind + Supabase.
 

@@ -18,7 +18,7 @@ function Shell({ title, children }: { title: string; children: React.ReactNode }
   return (
     <div className="flex min-h-screen items-center justify-center p-4">
       <div className="card w-full max-w-sm !p-6">
-        <div className="mb-6 flex items-center gap-2 font-display text-xl font-bold"><Wallet className="text-brand" />Meu Dinheiro</div>
+        <div className="mb-6 flex items-center gap-2 font-display text-xl font-bold"><Wallet className="text-brand" />Fluxo</div>
         <h1 className="mb-4 text-lg font-semibold">{title}</h1>{children}
       </div>
     </div>
